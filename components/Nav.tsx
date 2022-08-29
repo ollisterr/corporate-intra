@@ -42,7 +42,7 @@ const Nav = ({ links }: { links: LinkType[] }) => {
   }, []);
 
   const navigate = (slug) => {
-    router.push(slug, slug, { locale: router.locale }).then(() => {
+    router.push(slug).then(() => {
       toggleIsOpen(false);
     });
   };

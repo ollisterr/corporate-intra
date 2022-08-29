@@ -35,7 +35,7 @@ export const getPaths = async (token, preview = false): Promise<Paths> => {
       .map((story) => ({
         name: story.name,
         storyName: story.name,
-        slug: story.full_slug,
+        slug: story.full_slug === "home" ? "/" : story.full_slug,
       }))
   );
 };
