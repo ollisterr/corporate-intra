@@ -54,7 +54,7 @@ export const getStaticProps: GetStaticProps = async ({
   try {
     // join the entire slug
     const currentSlug: string | undefined =
-      (params.page as string[])?.join("/") || "etusivu";
+      (params.page as string[])?.join("/") || "home"; // fallback root path to "home" page
 
     console.log(
       `> CURRENT PAGE: /${currentSlug}, context: ${JSON.stringify(
@@ -68,21 +68,6 @@ export const getStaticProps: GetStaticProps = async ({
       currentSlug,
       preview
     );
-
-    // get all in-page links for the current story
-    const sameSiteLinks: LinkType[] = getElementsWithKey(
-      story.content.body,
-      "link"
-    ).map((blok) => {
-      return {
-        name: blok.link,
-        storyName: story.name,
-        slug: `${story.full_slug.replace(`${locale}/`, "")}#${parseHref(
-          blok.link
-        )}`,
-        locale,
-      };
-    });
 
     // get available page paths for the current locale
     const paths = await getPaths(
@@ -111,26 +96,14 @@ export const getStaticPaths = async () => {
     process.env.NODE_ENV === "development"
   );
 
-  // Build pages by locale
-  const paths = [];
   // gerenate NextJS paths of CMS pages
-  pages.forEach((page) => {
-    paths.push({
-      params: {
-        page: page.slug.split("/"),
-      },
-    });
+  const paths = pages.map((page) => ({
+    params: {
+      page: page.slug === "home" ? [""] : page.slug.split("/"),
+    },
+  }));
 
-    // For front page, add root path
-    if (page.slug === "etusivu") {
-      paths.push({ params: { page: [""] } });
-    }
-  });
-
-  console.log(
-    "> BUILT PATHS:",
-    paths.map((x) => `/${x.locale}/${x.params.page.join("/")}`)
-  );
+  console.log(JSON.stringify(paths));
 
   return {
     paths,
