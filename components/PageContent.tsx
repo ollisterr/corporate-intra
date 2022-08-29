@@ -13,7 +13,7 @@ const PageContent = ({ body }) => (
 );
 
 const PageWrapper = styled(Stack)`
-  padding-top: 1.5rem;
+  padding-top: 8rem;
   overflow: hidden;
 `;
 

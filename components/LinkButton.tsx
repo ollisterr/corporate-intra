@@ -1,7 +1,6 @@
 import React from "react";
 import NextLink from "next/link";
 import styled from "styled-components";
-import { Spacer } from "styled-layout";
 
 import { vibrantColors } from "../styles/utils";
 import { ButtonSoft } from "../styles";

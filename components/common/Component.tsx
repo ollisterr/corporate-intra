@@ -24,8 +24,6 @@ const Component = ({ blok }) => {
     case "image":
       return <Image {...blok} />;
     case "text-block":
-      return <TextBlock {...blok} />;
-    case "markdown":
       return <Markdown {...blok} />;
     case "link":
       return <LinkButton {...blok} />;

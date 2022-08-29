@@ -5,10 +5,9 @@ import dynamic from "next/dynamic";
 import Layout from "../components/Layout";
 
 import { getStory, getPaths } from "../services/storyblok";
-import Nav, { LinkType } from "../components/Nav";
+import Nav from "../components/Nav";
 import Loading from "../components/Loading";
 import useStoryblok from "../components/useStoryblok";
-import { parseHref, getElementsWithKey } from "../utils/utils";
 import Section from "../components/Section";
 
 const DynamicContent = dynamic(() => import("../components/PageContent"), {
@@ -36,7 +35,7 @@ const Index = ({ story, links, notFound, preview }) => {
     <Layout meta={story.content.meta} noIndex={story.content.hidden}>
       <Nav links={links} />
 
-      <DynamicContent body={body} />
+      {body && <DynamicContent body={body} />}
 
       {/* footer from global references */}
       {story.content.footer?.content && (

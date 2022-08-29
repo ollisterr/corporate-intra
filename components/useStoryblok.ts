@@ -29,7 +29,7 @@ const useStoryblok = (origStory, preview = false) => {
           const newStory = {
             content: window.storyblok.addComments(
               event.story.content,
-              event.story.id
+              event.story.id.toString()
             ),
           };
           window.storyblok.resolveRelations(newStory, [], () =>

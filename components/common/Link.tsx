@@ -5,14 +5,16 @@ import styled from "styled-components";
 
 import { BaseText } from "../../styles/typography";
 
-/* Helper component for linking to the same locale by default */
+interface Props extends Omit<LinkProps, "href"> {
+  href?: LinkProps["href"];
+}
 
 const Link = ({
   children,
   href,
   locale,
   ...rest
-}: React.PropsWithChildren<LinkProps>) => {
+}: React.PropsWithChildren<Props>) => {
   const router = useRouter();
 
   return href.toString().charAt(0) === "#" ? (

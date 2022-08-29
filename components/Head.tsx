@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import React from "react";
 import NextHead from "next/head";
+import Script from "next/script";
 
 export type MetaTags = {
   title: string;
@@ -29,13 +30,12 @@ const Head = ({
   return (
     <NextHead>
       <meta charSet="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+
       {noIndex && <meta name="robots" content="noindex" />}
 
       <title>{fullTitle(title)}</title>
       <meta name="description" content={description} />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-      <meta name="theme-color" content="#333" />
 
       <meta property="og:title" content={fullTitle(og_title)} />
       <meta property="og:description" content={og_description || description} />
@@ -57,43 +57,6 @@ const Head = ({
       />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:image:alt" content="Jäynä – Kisa on käynnissä!" />
-
-      <link rel="icon" sizes="180x180" href="/favicon/favicon.svg" />
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="32x32"
-        href="/favicon/favicon.svg"
-      />
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="16x16"
-        href="/favicon/favicon.svg"
-      />
-
-      <link
-        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,800&display=swap"
-        rel="stylesheet"
-      />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
-        rel="stylesheet"
-      />
-
-      <link rel="shortcut icon" href="/favicon/favicon.svg" />
-
-      <script
-        src="//app.storyblok.com/f/storyblok-latest.js"
-        type="text/javascript"
-      />
-
-      <script
-        async
-        defer
-        data-domain="jayna.fi"
-        src="https://plausible.io/js/plausible.js"
-      />
     </NextHead>
   );
 };

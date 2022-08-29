@@ -1,15 +1,15 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import styled from "styled-components";
 import { optimizeImage } from "../utils/utils";
 
 interface Props {
-  src: string;
-  width: number;
-  height: number;
+  src?: string;
+  width?: number | string;
+  height?: number | string;
   alt?: string;
 }
 
-const Image = ({ src, width, height, alt, isVisible }) => {
+const Image = ({ src, width, height, alt }: Props) => {
   const [isReady, setIsReady] = useState(false);
   const [source, setImageSource] = useState<string>();
 
@@ -21,15 +21,15 @@ const Image = ({ src, width, height, alt, isVisible }) => {
   }, [source]);
 
   // use storyblok image service to fetch optimized image size on render
-  useEffect(() => {
-    if (wrapperRef.current?.clientWidth) {
-      const imgWidth = Math.max(width, wrapperRef.current?.clientWidth);
-      setImageSource(optimizeImage(src, imgWidth));
-    }
-  }, [wrapperRef.current]);
+  useLayoutEffect(() => {
+    if (!wrapperRef.current.clientWidth) return;
+
+    const imgWidth = Math.max(Number(width), wrapperRef.current?.clientWidth);
+    setImageSource(optimizeImage(src, imgWidth));
+  }, []);
 
   return (
-    <Wrapper ref={wrapperRef} width={width} height={height}>
+    <Wrapper ref={wrapperRef} width={Number(width)} height={Number(height)}>
       <Img
         ref={imageRef}
         src={source}
