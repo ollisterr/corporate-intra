@@ -47,10 +47,11 @@ const Index = ({ story, links, notFound, preview }) => {
 
 export const getStaticProps: GetStaticProps = async ({
   params,
-  locale,
   preview = process.env.NODE_ENV === "development",
 }) => {
   try {
+    console.log(params);
+
     // join the entire slug
     const currentSlug: string | undefined =
       (params.page as string[])?.join("/") || "home"; // fallback root path to "home" page
@@ -58,7 +59,7 @@ export const getStaticProps: GetStaticProps = async ({
     console.log(
       `> CURRENT PAGE: /${currentSlug}, context: ${JSON.stringify(
         params
-      )}, language: ${locale}, preview mode: ${preview}`
+      )}, preview mode: ${preview}`
     );
 
     // get content for the page
@@ -91,9 +92,11 @@ export const getStaticProps: GetStaticProps = async ({
 export const getStaticPaths = async () => {
   // get all page paths
   const pages = await getPaths(
-    process.env.STORYBLOK_API_TOKEN,
+    process.env.STORYBLOK_PREVIEW_TOKEN,
     process.env.NODE_ENV === "development"
   );
+
+  console.log(pages);
 
   // gerenate NextJS paths of CMS pages
   const paths = pages.map((page) => ({
