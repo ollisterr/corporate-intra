@@ -1,12 +1,15 @@
-import { GetStaticProps } from "next";
 import React from "react";
 import styled from "styled-components";
 
-import Nav from "../components/Nav";
+import Nav, { NavItem } from "../components/Nav";
 import Layout from "../components/Layout";
-import { getPaths } from "../services/storyblok";
+import { createNavigationTree } from "~/utils/page.utils";
+import { GetStaticProps } from "next";
+import { getPaths } from "~/services/storyblok";
 
 const NotFound404 = ({ navigationTree }) => {
+  console.log(navigationTree);
+
   return (
     <Layout
       meta={{ title: "Page not found", description: "No jäynä here" }}
@@ -39,13 +42,15 @@ const Wrapper = styled.div`
 export const getStaticProps: GetStaticProps = async ({
   preview = process.env.NODE_ENV === "development",
 }) => {
-  const paths = await getPaths(
+  const routes = await getPaths(
     process.env[preview ? "STORYBLOK_PREVIEW_TOKEN" : "STORYBLOK_API_TOKEN"],
     preview
   );
 
+  const navigationTree = createNavigationTree(routes);
+
   return {
-    props: { links: paths },
+    props: { navigationTree },
     revalidate: 1600,
   };
 };

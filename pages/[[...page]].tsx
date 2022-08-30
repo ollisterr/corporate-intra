@@ -8,6 +8,7 @@ import { getStory, getPaths } from "../services/storyblok";
 import Nav, { NavItem } from "../components/Nav";
 import Loading from "../components/Loading";
 import useStoryblok from "../components/useStoryblok";
+import { createNavigationTree } from "~/utils/page.utils";
 
 const DynamicContent = dynamic(() => import("../components/PageContent"), {
   loading: Loading,
@@ -73,32 +74,7 @@ export const getStaticProps: GetStaticProps = async ({
       preview
     );
 
-    const navigationTree = [...routes]
-      // root paths first
-      .sort((a, b) => a.slug.length - b.slug.length)
-      .reduce((acc, curr) => {
-        const pathParams = curr.slug.split("/");
-
-        if (pathParams.length === 1) {
-          return [...acc, curr];
-        } else {
-          const accCopy = [...acc];
-          const rootIndex = accCopy.findIndex(
-            (x) => x.slug.replace("/", "") === pathParams[0]
-          );
-
-          if (rootIndex < 0) return [...acc, curr];
-
-          const existing = accCopy[rootIndex];
-
-          existing.subPages = [
-            ...(existing.subPages ?? []).filter((x) => x.slug !== curr.slug),
-            curr,
-          ];
-
-          return accCopy;
-        }
-      }, [] as NavItem[]);
+    const navigationTree = createNavigationTree(routes);
 
     return {
       props: {
