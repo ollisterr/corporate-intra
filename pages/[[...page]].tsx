@@ -5,16 +5,15 @@ import dynamic from "next/dynamic";
 import Layout from "../components/Layout";
 
 import { getStory, getPaths } from "../services/storyblok";
-import Nav from "../components/Nav";
+import Nav, { NavItem } from "../components/Nav";
 import Loading from "../components/Loading";
 import useStoryblok from "../components/useStoryblok";
-import Section from "../components/Section";
 
 const DynamicContent = dynamic(() => import("../components/PageContent"), {
   loading: Loading,
 });
 
-const Index = ({ story, links, notFound, preview }) => {
+const Index = ({ story, currentRoute, navigationTree, notFound, preview }) => {
   const router = useRouter();
 
   const body = useStoryblok(story, preview)?.content.body;
@@ -33,13 +32,14 @@ const Index = ({ story, links, notFound, preview }) => {
 
   return (
     <Layout meta={story.content.meta} noIndex={story.content.hidden}>
-      <Nav links={links} />
+      <Nav navigationTree={navigationTree} />
 
-      {body && <DynamicContent body={body} />}
-
-      {/* footer from global references */}
-      {story.content.footer?.content && (
-        <Section {...story.content.footer.content} />
+      {body && (
+        <DynamicContent
+          currentRoute={currentRoute}
+          navigationTree={navigationTree}
+          body={body}
+        />
       )}
     </Layout>
   );
@@ -50,11 +50,9 @@ export const getStaticProps: GetStaticProps = async ({
   preview = process.env.NODE_ENV === "development",
 }) => {
   try {
-    console.log(params);
-
     // join the entire slug
-    const currentSlug: string | undefined =
-      (params.page as string[])?.join("/") || "home"; // fallback root path to "home" page
+    const rawSlug = (params.page as string[] | undefined)?.join("/");
+    const currentSlug = rawSlug || "home"; // fallback root path to "home" page
 
     console.log(
       `> CURRENT PAGE: /${currentSlug}, context: ${JSON.stringify(
@@ -70,16 +68,49 @@ export const getStaticProps: GetStaticProps = async ({
     );
 
     // get available page paths for the current locale
-    const paths = await getPaths(
+    const routes = await getPaths(
       process.env[preview ? "STORYBLOK_PREVIEW_TOKEN" : "STORYBLOK_API_TOKEN"],
       preview
     );
+
+    const navigationTree = [...routes]
+      // root paths first
+      .sort((a, b) => a.slug.length - b.slug.length)
+      .reduce((acc, curr) => {
+        const pathParams = curr.slug.split("/");
+
+        if (pathParams.length === 1) {
+          return [...acc, curr];
+        } else {
+          const accCopy = [...acc];
+          const rootIndex = accCopy.findIndex(
+            (x) => x.slug.replace("/", "") === pathParams[0]
+          );
+
+          if (rootIndex < 0) return [...acc, curr];
+
+          const existing = accCopy[rootIndex];
+
+          existing.subPages = [
+            ...(existing.subPages ?? []).filter((x) => x.slug !== curr.slug),
+            curr,
+          ];
+
+          return accCopy;
+        }
+      }, [] as NavItem[]);
+
+    console.log(rawSlug, routes, navigationTree);
 
     return {
       props: {
         story,
         preview,
-        links: paths, // for rendering navbar
+        currentRoute: routes.find(
+          (route) =>
+            route.slug.replace("/", "") === (rawSlug ?? "/").replace("/", "")
+        ),
+        navigationTree, // for rendering navbar
       },
       revalidate: 60, // one minute
     };
@@ -96,16 +127,12 @@ export const getStaticPaths = async () => {
     process.env.NODE_ENV === "development"
   );
 
-  console.log(pages);
-
   // gerenate NextJS paths of CMS pages
   const paths = pages.map((page) => ({
     params: {
       page: page.slug === "home" ? [""] : page.slug.split("/"),
     },
   }));
-
-  console.log(JSON.stringify(paths));
 
   return {
     paths,

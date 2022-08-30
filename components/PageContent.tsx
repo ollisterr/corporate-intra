@@ -3,14 +3,76 @@ import { Stack } from "styled-layout";
 import styled from "styled-components";
 
 import Component from "./common/Component";
+import { LinkType, NavigationTree } from "./Nav";
+import { useRouter } from "next/router";
 
-const PageContent = ({ body }) => (
-  <PageWrapper spacing="none" align="center">
-    {body.map((blok) => (
-      <Component key={blok._uid} blok={blok} />
-    ))}
-  </PageWrapper>
-);
+import Breadcrumbs, { BreadcrumbsItem } from "@atlaskit/breadcrumbs";
+import PageHeader from "@atlaskit/page-header";
+import Link from "next/link";
+
+interface Props {
+  body: any;
+  navigationTree: NavigationTree;
+  currentRoute: LinkType;
+}
+
+const getCurrentRoute = (
+  currentSlug: string,
+  tree: NavigationTree
+): LinkType | null => {
+  return tree.reduce((acc, curr, i, arr) => {
+    if (acc) {
+      arr.splice(1);
+      return acc;
+    } else if (curr.slug === currentSlug) {
+      return curr;
+    } else if (curr.subPages) {
+      return getCurrentRoute(currentSlug, curr.subPages);
+    } else {
+      return null;
+    }
+  }, null);
+};
+
+const PageContent = ({ body, currentRoute, navigationTree }: Props) => {
+  const rootPath = currentRoute.slug.split("/")[0];
+  const rootPage = navigationTree.find(
+    (x) => x.slug.replace("/", "") === rootPath
+  );
+
+  if (!currentRoute) return null;
+
+  const breadcrumbs = (
+    <Breadcrumbs onExpand={() => undefined}>
+      {rootPage && rootPage.slug !== currentRoute.slug && (
+        <Link href={rootPage.slug}>
+          <BreadcrumbsItem text={rootPage.storyName} key={rootPage.slug} />
+        </Link>
+      )}
+
+      {rootPage && rootPage.slug !== currentRoute.slug && (
+        <Link href={currentRoute.slug}>
+          <BreadcrumbsItem
+            text={currentRoute.storyName}
+            key={currentRoute.slug}
+          />
+        </Link>
+      )}
+    </Breadcrumbs>
+  );
+
+  return (
+    <PageWrapper spacing="none" align="center">
+      <PageHeader breadcrumbs={breadcrumbs}>
+        {currentRoute.storyName}
+      </PageHeader>
+
+      {body.map((blok) => (
+        <Component key={blok._uid} blok={blok} />
+      ))}
+    </PageWrapper>
+  );
+};
 
 const PageWrapper = styled(Stack)`
   padding-top: 8rem;
