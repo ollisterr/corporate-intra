@@ -59,7 +59,9 @@ const theme = {
       letter-spacing: 0.05rem;
     `,
     body: css`
-      font-family: "Open sans", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif;
       font-size: 1rem;
       font-weight: normal;
       line-height: 1.8;
@@ -69,7 +71,9 @@ const theme = {
       }
     `,
     small: css`
-      font-family: "Open sans", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif;
       font-size: 0.7rem;
       font-weight: lighter;
       line-height: 1.2;

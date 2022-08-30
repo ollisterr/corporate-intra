@@ -1,9 +1,9 @@
 export const parseHref = (x: string) =>
   x.toLowerCase().replace(/\s/g, "-").replace(/[äå]/g, "a").replace(/ö/g, "o");
 
-export const optimizeImage = (src, size) => {
+export const optimizeImage = (src: string, width: number) => {
   const parsedUrl = src.split("/f/")[1];
-  return `https://img2.storyblok.com/${size + 100}x0/smart/f/${parsedUrl}`;
+  return `https://img2.storyblok.com/${width + 100}x0/smart/f/${parsedUrl}`;
 };
 
 export const getElementsWithKey = (

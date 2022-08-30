@@ -19,9 +19,9 @@ const components: Components = {
   h4: Heading,
   h5: Heading,
   h6: Heading,
-  li: ({ children, ordered }) => <ListItem>{children}</ListItem>,
+  li: ({ children }) => <ListItem>{children}</ListItem>,
   link: Link,
-  img: Image,
+  img: ({ src, ...rest }) => <Image {...rest} src={{ filename: src }} />,
 };
 
 const Markdown = ({ content }) => (

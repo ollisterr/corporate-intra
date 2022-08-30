@@ -61,15 +61,6 @@ export default class MyDocument extends Document {
             href="/favicon/favicon.svg"
           />
 
-          <link
-            href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,800&display=swap"
-            rel="stylesheet"
-          />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
-            rel="stylesheet"
-          />
-
           <link rel="shortcut icon" href="/favicon/favicon.svg" />
 
           <Script

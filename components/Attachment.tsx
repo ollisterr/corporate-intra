@@ -37,7 +37,7 @@ export const Wrapper = styled.span`
 
 export const Caption = styled.p`
   font-size: 0.8rem;
-  color: #444;
+  color: ${(p) => p.theme.colors["grey-dark"]};
 `;
 
 export const Content = styled.div`
