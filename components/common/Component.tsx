@@ -7,9 +7,10 @@ import VideoSection from "../VideoSection";
 import Image from "../Image";
 import { Column, Row } from "./Layout";
 import { Divider } from "../../styles";
-import TextBlock from "../TextBlock";
+import { Disclaimer } from "../Disclaimer";
 import Markdown from "../Markdown";
 import LinkButton from "../LinkButton";
+import { Attachament } from "../Attachment";
 
 const Component = ({ blok }) => {
   switch (blok.component) {
@@ -25,6 +26,10 @@ const Component = ({ blok }) => {
       return <Image {...blok} />;
     case "text-block":
       return <Markdown {...blok} />;
+    case "attachment":
+      return <Attachament {...blok} />;
+    case "disclaimer":
+      return <Disclaimer {...blok} />;
     case "link":
       return <LinkButton {...blok} />;
     case "separator":

@@ -1,12 +1,10 @@
-import { GetStaticProps } from "next";
 import { LinkType, NavItem } from "~/components/Nav";
-import { getStory, getPaths } from "~/services/storyblok";
 
 export const createNavigationTree = (routes: LinkType[]) =>
   [...routes]
     // root paths first
     .sort((a, b) => a.slug.length - b.slug.length)
-    .reduce((acc, curr) => {
+    .reduce<NavItem[]>((acc, curr) => {
       const pathParams = curr.slug.split("/");
 
       if (pathParams.length === 1) {
@@ -28,4 +26,11 @@ export const createNavigationTree = (routes: LinkType[]) =>
 
         return accCopy;
       }
-    }, [] as NavItem[]);
+    }, [] as NavItem[])
+    .map((page) => {
+      const clone = [...(page.subPages ?? [])];
+      return {
+        ...page,
+        subPages: clone.sort((a, b) => (a.storyName < b.storyName ? -1 : 1)),
+      };
+    });

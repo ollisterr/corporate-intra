@@ -66,7 +66,7 @@ const PageContent = ({ body, currentRoute, navigationTree }: Props) => {
     <PageLayout>
       <Content testId="content">
         <Main testId="main" id="main" skipLinkTitle="Main Content">
-          <Container>
+          <Container spacing="medium">
             <PageHeader breadcrumbs={breadcrumbs}>
               {currentRoute.storyName}
             </PageHeader>
