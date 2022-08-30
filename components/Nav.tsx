@@ -1,13 +1,13 @@
 import React from "react";
 
 import DropdownMenu, { DropdownItemGroup } from "@atlaskit/dropdown-menu";
-import { LinkItem } from "@atlaskit/menu";
+import { ButtonItem } from "@atlaskit/menu";
 
 import {
   AtlassianNavigation,
   PrimaryButton,
 } from "@atlaskit/atlassian-navigation";
-import Link from "next/link";
+import { Link } from "./common";
 import styled from "styled-components";
 
 export type LinkType = {
@@ -30,12 +30,12 @@ const Nav = ({ navigationTree }: { navigationTree: NavItem[] }) => {
               <DropdownMenu trigger={page.storyName}>
                 <DropdownItemGroup>
                   <Link key={page.slug} href={page.slug}>
-                    <LinkItem>{page.name}</LinkItem>
+                    <ButtonItem>{page.name}</ButtonItem>
                   </Link>
 
                   {page.subPages.map((page) => (
                     <Link key={page.slug} href={page.slug}>
-                      <LinkItem>{page.name}</LinkItem>
+                      <ButtonItem>{page.name}</ButtonItem>
                     </Link>
                   ))}
                 </DropdownItemGroup>

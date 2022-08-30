@@ -1,19 +1,7 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 
-import LoadingIcon from "./common/LoadingIcon";
-
-const Loading = () => (
-  <Wrapper>
-    <Bottom>
-      <LoadingIcon />
-    </Bottom>
-
-    <Overlay>
-      <LoadingIcon />
-    </Overlay>
-  </Wrapper>
-);
+const Loading = () => <Wrapper>Loading...</Wrapper>;
 
 const Wrapper = styled.div`
   position: fixed;

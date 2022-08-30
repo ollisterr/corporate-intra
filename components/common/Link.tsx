@@ -9,7 +9,7 @@ interface Props extends Omit<LinkProps, "href"> {
   href?: LinkProps["href"];
 }
 
-const Link = ({
+export const Link = ({
   children,
   href,
   locale,
@@ -23,7 +23,7 @@ const Link = ({
     </LinkStyle>
   ) : (
     <NextLink {...rest} href={href} locale={locale || router.locale}>
-      <LinkStyle>{children}</LinkStyle>
+      <a>{children}</a>
     </NextLink>
   );
 };
@@ -34,5 +34,3 @@ const LinkStyle = styled(BaseText)`
   text-decoration: underline;
   cursor: pointer;
 `;
-
-export default Link;

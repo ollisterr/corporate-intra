@@ -1,11 +1,10 @@
 /* eslint-disable react/display-name */
 import React from "react";
 import ReactMarkdown, { Components } from "react-markdown";
-import { ReactMarkdownOptions } from "react-markdown/lib/react-markdown";
 import { Stack } from "styled-layout";
 
 import { Text, Title, Subtitle, ListItem } from "../styles/typography";
-import Link from "./common/Link";
+import { Link } from "./common";
 import Image from "./Image";
 
 const Heading = ({ children, level }) =>

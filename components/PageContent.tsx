@@ -4,11 +4,10 @@ import styled from "styled-components";
 
 import Component from "./common/Component";
 import { LinkType, NavigationTree } from "./Nav";
-import { useRouter } from "next/router";
 
 import Breadcrumbs, { BreadcrumbsItem } from "@atlaskit/breadcrumbs";
 import PageHeader from "@atlaskit/page-header";
-import Link from "next/link";
+import { Link } from "./common";
 import { Content, Main, PageLayout } from "@atlaskit/page-layout";
 
 interface Props {
@@ -46,18 +45,21 @@ const PageContent = ({ body, currentRoute, navigationTree }: Props) => {
   const breadcrumbs = (
     <Breadcrumbs onExpand={() => undefined}>
       {rootPage && rootPage.slug !== currentRoute.slug && (
-        <Link href={rootPage.slug}>
-          <BreadcrumbsItem text={rootPage.storyName} key={rootPage.slug} />
-        </Link>
+        <BreadcrumbsItem
+          component={Link}
+          href={rootPage.slug}
+          text={rootPage.storyName}
+          key={rootPage.slug}
+        />
       )}
 
       {rootPage && rootPage.slug !== currentRoute.slug && (
-        <Link href={currentRoute.slug}>
-          <BreadcrumbsItem
-            text={currentRoute.storyName}
-            key={currentRoute.slug}
-          />
-        </Link>
+        <BreadcrumbsItem
+          component={Link}
+          text={currentRoute.storyName}
+          key={currentRoute.slug}
+          href={currentRoute.slug}
+        />
       )}
     </Breadcrumbs>
   );

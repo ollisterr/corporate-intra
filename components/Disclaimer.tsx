@@ -1,7 +1,7 @@
 import SectionMessage, {
   SectionMessageAction,
 } from "@atlaskit/section-message";
-import Link from "next/link";
+import { Link } from "./common";
 import Markdown from "./Markdown";
 
 export const Disclaimer = ({ title, body, link }) => (
