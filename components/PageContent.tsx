@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import Breadcrumbs, { BreadcrumbsItem } from "@atlaskit/breadcrumbs";
 import PageHeader from "@atlaskit/page-header";
 import Link from "next/link";
+import { Content, Main, PageLayout } from "@atlaskit/page-layout";
 
 interface Props {
   body: any;
@@ -62,20 +63,28 @@ const PageContent = ({ body, currentRoute, navigationTree }: Props) => {
   );
 
   return (
-    <PageWrapper spacing="none" align="center">
-      <PageHeader breadcrumbs={breadcrumbs}>
-        {currentRoute.storyName}
-      </PageHeader>
+    <PageLayout>
+      <Content testId="content">
+        <Main testId="main" id="main" skipLinkTitle="Main Content">
+          <Container>
+            <PageHeader breadcrumbs={breadcrumbs}>
+              {currentRoute.storyName}
+            </PageHeader>
 
-      {body.map((blok) => (
-        <Component key={blok._uid} blok={blok} />
-      ))}
-    </PageWrapper>
+            {body.map((blok) => (
+              <Component key={blok._uid} blok={blok} />
+            ))}
+          </Container>
+        </Main>
+      </Content>
+    </PageLayout>
   );
 };
 
-const PageWrapper = styled(Stack)`
-  padding-top: 8rem;
+const Container = styled(Stack)`
+  padding: 1rem;
+  margin: 0 auto;
+  max-width: 800px;
   overflow: hidden;
 `;
 

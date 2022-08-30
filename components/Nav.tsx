@@ -8,6 +8,7 @@ import {
   PrimaryButton,
 } from "@atlaskit/atlassian-navigation";
 import Link from "next/link";
+import styled from "styled-components";
 
 export type LinkType = {
   name: string;
@@ -25,25 +26,29 @@ const Nav = ({ navigationTree }: { navigationTree: NavItem[] }) => {
       primaryItems={navigationTree.map((page) => {
         if (page.subPages) {
           return (
-            <DropdownMenu trigger={page.storyName}>
-              <DropdownItemGroup>
-                <Link key={page.slug} href={page.slug}>
-                  <LinkItem>{page.name}</LinkItem>
-                </Link>
-
-                {page.subPages.map((page) => (
+            <Wrapper>
+              <DropdownMenu trigger={page.storyName}>
+                <DropdownItemGroup>
                   <Link key={page.slug} href={page.slug}>
                     <LinkItem>{page.name}</LinkItem>
                   </Link>
-                ))}
-              </DropdownItemGroup>
-            </DropdownMenu>
+
+                  {page.subPages.map((page) => (
+                    <Link key={page.slug} href={page.slug}>
+                      <LinkItem>{page.name}</LinkItem>
+                    </Link>
+                  ))}
+                </DropdownItemGroup>
+              </DropdownMenu>
+            </Wrapper>
           );
         } else {
           return (
-            <Link href={page.slug}>
-              <PrimaryButton>{page.storyName}</PrimaryButton>
-            </Link>
+            <Wrapper>
+              <Link href={page.slug}>
+                <PrimaryButton>{page.storyName}</PrimaryButton>
+              </Link>
+            </Wrapper>
           );
         }
       })}
@@ -52,5 +57,12 @@ const Nav = ({ navigationTree }: { navigationTree: NavItem[] }) => {
     />
   );
 };
+
+const Wrapper = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-right: 1rem;
+`;
 
 export default Nav;

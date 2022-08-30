@@ -100,8 +100,6 @@ export const getStaticProps: GetStaticProps = async ({
         }
       }, [] as NavItem[]);
 
-    console.log(rawSlug, routes, navigationTree);
-
     return {
       props: {
         story,
