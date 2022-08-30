@@ -6,13 +6,13 @@ import Nav from "../components/Nav";
 import Layout from "../components/Layout";
 import { getPaths } from "../services/storyblok";
 
-const NotFound404 = ({ links }) => {
+const NotFound404 = ({ navigationTree }) => {
   return (
     <Layout
       meta={{ title: "Page not found", description: "No jäynä here" }}
       noIndex
     >
-      <Nav links={links} />
+      <Nav navigationTree={navigationTree} />
 
       <Wrapper>404</Wrapper>
     </Layout>
