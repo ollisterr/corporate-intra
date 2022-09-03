@@ -34,4 +34,4 @@ export const createNavigationTree = (routes: LinkType[]) =>
         ...page,
         subPages: clone.sort((a, b) => (a.storyName < b.storyName ? -1 : 1)),
       };
-    });
+    }).sort((a, b) => a.subPages.length - b.subPages.length);

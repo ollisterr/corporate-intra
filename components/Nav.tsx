@@ -9,6 +9,7 @@ import {
 } from "@atlaskit/atlassian-navigation";
 import { Link } from "./common";
 import styled from "styled-components";
+import Image from "./Image";
 
 export type LinkType = {
   name: string;
@@ -25,6 +26,8 @@ const Nav = ({ navigationTree }: { navigationTree: NavItem[] }) => {
     <AtlassianNavigation
       label="site"
       primaryItems={navigationTree.map((page) => {
+        if (page.slug === "/") return null;
+
         if (page.subPages.length) {
           return (
             <Wrapper>
@@ -54,11 +57,17 @@ const Nav = ({ navigationTree }: { navigationTree: NavItem[] }) => {
         }
       })}
       // TODO Lisää logo
-      renderProductHome={() => null}
+      renderProductHome={() => <Link href="/"><Logo src="/logo.png" /></Link>}
     />
     </Container>
   );
 };
+
+const Logo = styled.img`
+  height: 30px;
+  padding-left: 1vw;
+  padding-right: 4vw;
+`
 
 const Container = styled.div`
   max-width: 100vw;

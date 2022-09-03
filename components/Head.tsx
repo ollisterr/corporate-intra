@@ -42,9 +42,9 @@ const Head = ({
       <meta property="og:site_name" content="Otaniemen Jäynäkilpailu" />
       <meta
         property="og:image"
-        content={og_image?.filename || "/og_image.jpg"}
+        content={og_image?.filename || "/og_banner.jpg"}
       />
-      <meta property="og:url" content="https://jayna.fi" />
+      <meta property="og:url" content="https://oksaatio.fun" />
 
       <meta name="twitter:title" content={fullTitle(twitter_title)} />
       <meta
@@ -53,7 +53,7 @@ const Head = ({
       />
       <meta
         name="twitter:image"
-        content={twitter_image?.filename || "/og_image.jpg"}
+        content={twitter_image?.filename || "/og_banner.jpg"}
       />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:image:alt" content="Jäynä – Kisa on käynnissä!" />

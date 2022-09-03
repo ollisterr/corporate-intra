@@ -32,7 +32,7 @@ const Index = ({ story, currentRoute, navigationTree, notFound, preview }) => {
   }
 
   return (
-    <Layout meta={story.content.meta} noIndex={story.content.hidden}>
+    <Layout meta={{ title: "Intra – OK-säätiö", og_title: "Intra – OK-säätiö", description: "Intra OK-säätiön sisäiseen dokumentointiin ja tiedotukseen" }}>
       <Nav navigationTree={navigationTree} />
 
       {body && (
