@@ -15,18 +15,40 @@ export const getSpace = async (token) => {
   return data.space;
 };
 
-export const getStories = async (token, preview = false) => {
+const PAGE_SIZE = 25
+
+const getAllStories = async (page = 1, token, preview) => {
+  let stories = []
+
   const { data } = await StoryblokService.getStories({
     token,
     version: preview ? "draft" : "published",
+    per_page: PAGE_SIZE,
+    page: page.toString()
   });
-  return data.stories;
+  
+  stories = data.stories
+  console.log(page, stories)
+
+  if (stories.length === PAGE_SIZE) {
+    stories = [...stories, ...(await getAllStories(page + 1, token, preview))]
+  }
+    
+  return stories
 };
+
+
+export const getStories = async (token, preview = false) => {
+  return await getAllStories(1, token, preview);
+};
+
 
 export type Paths = LinkType[];
 
 export const getPaths = async (token, preview = false): Promise<Paths> => {
   const stories = await getStories(token, preview);
+
+  console.log("STORIES", stories)
 
   return (
     stories

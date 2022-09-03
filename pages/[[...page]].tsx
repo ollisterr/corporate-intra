@@ -96,17 +96,24 @@ export const getStaticProps: GetStaticProps = async ({
 
 export const getStaticPaths = async () => {
   // get all page paths
+  console.log("MORO")
   const pages = await getPaths(
     process.env.STORYBLOK_PREVIEW_TOKEN,
     process.env.NODE_ENV === "development"
   );
+
+  console.log(pages);
 
   // gerenate NextJS paths of CMS pages
   const paths = pages.map((page) => ({
     params: {
       page: page.slug === "home" ? [""] : page.slug.split("/"),
     },
+
   }));
+  
+  console.log("PATHS", paths)
+
 
   return {
     paths,

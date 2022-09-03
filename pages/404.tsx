@@ -8,8 +8,6 @@ import { GetStaticProps } from "next";
 import { getPaths } from "~/services/storyblok";
 
 const NotFound404 = ({ navigationTree }) => {
-  console.log(navigationTree);
-
   return (
     <Layout
       meta={{ title: "Page not found", description: "No jäynä here" }}
