@@ -25,7 +25,6 @@ const Head = ({
   twitter_image,
   noIndex = false,
 }: MetaTags & { noIndex?: boolean }) => {
-  const fullTitle = (x?: string) => `${x || title} – Jäynäkilpailu`;
 
   return (
     <NextHead>
@@ -34,10 +33,10 @@ const Head = ({
 
       {noIndex && <meta name="robots" content="noindex" />}
 
-      <title>{fullTitle(title)}</title>
+      <title>{title}</title>
       <meta name="description" content={description} />
 
-      <meta property="og:title" content={fullTitle(og_title)} />
+      <meta property="og:title" content={og_title} />
       <meta property="og:description" content={og_description || description} />
       <meta property="og:site_name" content="Otaniemen Jäynäkilpailu" />
       <meta
@@ -46,7 +45,7 @@ const Head = ({
       />
       <meta property="og:url" content="https://oksaatio.fun" />
 
-      <meta name="twitter:title" content={fullTitle(twitter_title)} />
+      <meta name="twitter:title" content={twitter_title} />
       <meta
         name="twitter:description"
         content={twitter_description || description}
