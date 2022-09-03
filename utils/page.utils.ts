@@ -7,6 +7,7 @@ export const createNavigationTree = (routes: LinkType[]) =>
     .reduce<NavItem[]>((acc, curr) => {
       const pathParams = curr.slug.split("/");
 
+
       if (pathParams.length === 1) {
         return [...acc, curr];
       } else {

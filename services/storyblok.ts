@@ -28,7 +28,6 @@ const getAllStories = async (page = 1, token, preview) => {
   });
   
   stories = data.stories
-  console.log(page, stories)
 
   if (stories.length === PAGE_SIZE) {
     stories = [...stories, ...(await getAllStories(page + 1, token, preview))]
@@ -47,8 +46,6 @@ export type Paths = LinkType[];
 
 export const getPaths = async (token, preview = false): Promise<Paths> => {
   const stories = await getStories(token, preview);
-
-  console.log("STORIES", stories)
 
   return (
     stories

@@ -45,14 +45,15 @@ const theme = {
   },
   typography: {
     title: css`
-      font-family: "Playfair Display", serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto";
+      color: "#666";
       font-size: 1.8rem;
       font-weight: bold;
       line-height: 1.6;
       letter-spacing: 0.1rem;
     `,
     subtitle: css`
-      font-family: "Playfair Display", serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto";
       font-size: 1.2rem;
       font-weight: semibold;
       line-height: 1.6;
@@ -79,7 +80,7 @@ const theme = {
       line-height: 1.2;
     `,
     action: css`
-      font-family: "Playfair Display", serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto";
       font-size: 1rem;
       font-weight: bold;
       line-height: 1.4;

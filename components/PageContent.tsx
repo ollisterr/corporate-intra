@@ -64,7 +64,7 @@ const PageContent = ({ body, currentRoute, navigationTree }: Props) => {
     </Breadcrumbs>
   );
 
-  return (
+  return (<Wrapper>
     <PageLayout>
       <Content testId="content">
         <Main testId="main" id="main" skipLinkTitle="Main Content">
@@ -80,14 +80,23 @@ const PageContent = ({ body, currentRoute, navigationTree }: Props) => {
         </Main>
       </Content>
     </PageLayout>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.main`
+  width: 100vw;
+  max-width: 100vw;
+  min-width: 100vw;
+  overflow: hidden;
+`
 
 const Container = styled(Stack)`
   padding: 1rem;
   margin: 0 auto;
   max-width: 800px;
   overflow: hidden;
+  padding-bottom: 200px;
 `;
 
 export default PageContent;

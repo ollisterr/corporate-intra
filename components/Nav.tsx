@@ -21,10 +21,11 @@ export type NavigationTree = NavItem[];
 
 const Nav = ({ navigationTree }: { navigationTree: NavItem[] }) => {
   return (
+    <Container>
     <AtlassianNavigation
       label="site"
       primaryItems={navigationTree.map((page) => {
-        if (page.subPages) {
+        if (page.subPages.length) {
           return (
             <Wrapper>
               <DropdownMenu trigger={page.storyName}>
@@ -55,14 +56,18 @@ const Nav = ({ navigationTree }: { navigationTree: NavItem[] }) => {
       // TODO Lisää logo
       renderProductHome={() => null}
     />
+    </Container>
   );
 };
+
+const Container = styled.div`
+  max-width: 100vw;
+`
 
 const Wrapper = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  padding-right: 1rem;
 `;
 
 export default Nav;
